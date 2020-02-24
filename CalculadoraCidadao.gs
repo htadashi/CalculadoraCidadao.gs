@@ -1,7 +1,7 @@
 /*====================================================================================================================================*
   CalculadoraCidadao.gs by Hugo Tadashi
   ====================================================================================================================================
-  Version:      0.1.1
+  Version:      0.1.2
   Project Page: https://github.com/
   Copyright:    (c) 2020 by Hugo Tadashi
   License:      MIT License
@@ -37,20 +37,22 @@ function parseResponse(html){
 /**
  * Obtém valor corrigido pela SELIC a partir da calculadora do cidadão do BCB
  *
- * @param {data_inicial} Data inicial no formado "DD/MM/AAAA"
- * @param {data_final}   Data final no formado "DD/MM/AAAA"
+ * @param {data_inicial} Data inicial 
+ * @param {data_final}   Data final 
  * @param {valor}        Valor a ser corrigido pelo SELIC
  * @customFunction
  *
  * @return Valor corrigido 
  */
 function CORRIGIR_SELIC(data_inicial, data_final, valor) {
-
+  
+  data_inicial_br = Utilities.formatDate(data_inicial, "GMT", "dd/MM/yyyy");
+  data_final_br = Utilities.formatDate(data_final, "GMT", "dd/MM/yyyy");
   valor_br = valor.toLocaleString('pt-BR');
   // POST request 
   var formData = {
-    'dataInicial': data_inicial,
-    'dataFinal': data_final,
+    'dataInicial': data_inicial_br,
+    'dataFinal': data_final_br,
     'valorCorrecao': valor_br
   };
   
@@ -68,8 +70,8 @@ function CORRIGIR_SELIC(data_inicial, data_final, valor) {
 /**
  * Obtém valor corrigido pelo CDI a partir da calculadora do cidadão do BCB
  *
- * @param {data_inicial} Data inicial no formado "DD/MM/AAAA"
- * @param {data_final}   Data final no formado "DD/MM/AAAA"
+ * @param {data_inicial} Data inicial 
+ * @param {data_final}   Data final 
  * @param {valor}        Valor a ser corrigido pelo CDI
  * @param {CDI}          Percentual do CDI (de 0% a 100%)
  * @customFunction
@@ -78,11 +80,13 @@ function CORRIGIR_SELIC(data_inicial, data_final, valor) {
  */
 function CORRIGIR_CDI(data_inicial, data_final, valor, CDI) {
   
+  data_inicial_br = Utilities.formatDate(data_inicial, "GMT", "dd/MM/yyyy");
+  data_final_br = Utilities.formatDate(data_final, "GMT", "dd/MM/yyyy");
   valor_br = valor.toLocaleString('pt-BR');
   // POST request 
   var formData = {
-    'dataInicial': data_inicial,
-    'dataFinal': data_final,
+    'dataInicial': data_inicial_br,
+    'dataFinal': data_final_br,
     'valorCorrecao': valor_br,
     'percentualCorrecao': CDI
   };
