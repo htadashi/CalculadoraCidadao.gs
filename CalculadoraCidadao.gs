@@ -1,7 +1,7 @@
 /*====================================================================================================================================*
   CalculadoraCidadao.gs by Hugo Tadashi
   ====================================================================================================================================
-  Version:      0.1.0
+  Version:      0.1.1
   Project Page: https://github.com/
   Copyright:    (c) 2020 by Hugo Tadashi
   License:      MIT License
@@ -19,10 +19,10 @@ function parseResponse(html){
   
   const regex = /Valor\s*corrigido\s*na\s*data\s*final\s*\<.*\>R\$\s*(\d*\.?\d*\,?\d*)/gsm;
   var match = regex.exec(html);
-  var valor = match[1];
+  var valor = match[1];   
   
   if(SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetLocale() == 'pt_BR'){        
-  
+    
   }else{
     valor = valor.replace('.','');
     a_valor = valor.split(',');
@@ -37,8 +37,8 @@ function parseResponse(html){
 /**
  * Obtém valor corrigido pela SELIC a partir da calculadora do cidadão do BCB
  *
- * @param {data_inicial} Data inicial no formado DD/MM/AAAA
- * @param {data_final}   Data final no formado DD/MM/AAAA
+ * @param {data_inicial} Data inicial no formado "DD/MM/AAAA"
+ * @param {data_final}   Data final no formado "DD/MM/AAAA"
  * @param {valor}        Valor a ser corrigido pelo SELIC
  * @customFunction
  *
@@ -68,8 +68,8 @@ function CORRIGIR_SELIC(data_inicial, data_final, valor) {
 /**
  * Obtém valor corrigido pelo CDI a partir da calculadora do cidadão do BCB
  *
- * @param {data_inicial} Data inicial no formado DD/MM/AAAA
- * @param {data_final}   Data final no formado DD/MM/AAAA
+ * @param {data_inicial} Data inicial no formado "DD/MM/AAAA"
+ * @param {data_final}   Data final no formado "DD/MM/AAAA"
  * @param {valor}        Valor a ser corrigido pelo CDI
  * @param {CDI}          Percentual do CDI (de 0% a 100%)
  * @customFunction
@@ -83,7 +83,7 @@ function CORRIGIR_CDI(data_inicial, data_final, valor, CDI) {
   var formData = {
     'dataInicial': data_inicial,
     'dataFinal': data_final,
-    'valorCorrecao': valor/10,
+    'valorCorrecao': valor_br,
     'percentualCorrecao': CDI
   };
   
