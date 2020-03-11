@@ -12,3 +12,6 @@ Script para usar a Calculadora do Cidadão do Banco Central em planilhas do Goog
 
 * `CORRIGIR_SELIC(data_inicial;data_final;v)`: Obtém o valor *v* corrigido pela taxa SELIC a partir da data inicial *data_inicial* até a data final *data_final*.  A data inicial e a data final devem estar no formato DD/MM/AAAA.
 * `CORRIGIR_CDI(data_inicial;data_final;perc_cdi;v)`:  Obtém o valor *v* corrigido pela taxa CDI com porcentagem *perc_cdi* a partir da data inicial *data_inicial* até a data final *data_final*.  A data inicial e a data final devem estar no formato DD/MM/AAAA.
+
+## Disclaimer
+O autor do script não assume qualquer responsabilidade por eventuais bugs, atrasos ou indisponibilidade de serviços de telecomunicação, interrupção, falha ou pelas imprecisões no fornecimento dos serviços ou informações. Não assume, também, responsabilidade por qualquer perda ou dano oriundo de tais interrupções, atrasos, falhas ou imperfeições, bem como pelo uso inadequado das informações fornecidas.
