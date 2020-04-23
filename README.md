@@ -26,6 +26,7 @@ Obtém valor corrigido pela SELIC.
 ### CORRIGIR_CDI
 
 Obtém valor corrigido pelo CDI.
+*Nota: No site do Banco Central a taxa CDI é atualizada no dia útil seguinte da data de referência, na parte da manhã.  A taxa CDI é calculada e divulgada pela Brasil, Bolsa, Balcão S.A. (B3), em cujo site a taxa pode ser obtida com antecedência.*
 
 #### Sintaxe
 
