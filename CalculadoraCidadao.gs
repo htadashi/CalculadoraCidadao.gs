@@ -110,7 +110,7 @@ function CORRIGIR_TR(data_inicio_serie, data_vencimento_serie, valor, data_efeti
  * @param {Date} data_inicial         - Data inicial
  * @param {Date} data_final           - Data final
  * @param {number} valor              - Valor a ser corrigido pela remuneração da poupança
- * @param {boolean} [regra_nova=true] - Regra de correção nova (TRUE ou FALSE)
+ * @param {boolean} [regra_nova=true] - Regra de correção nova
  * @customFunction
  *
  * @returns {number} Valor corrigido
@@ -154,7 +154,7 @@ function CORRIGIR_INDICE_DE_PRECO(mes_inicial, mes_final, valor, indice_de_preco
     const valorCorrigido = obterValor('corrigirPorIndice', formData);
     return valorCorrigido;
   } else {
-    throw new Error('indice_de_preco de preço inválido');
+    throw new Error('indice_de_preco inválido');
   }
 }
 
