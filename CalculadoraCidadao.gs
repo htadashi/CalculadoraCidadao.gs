@@ -135,7 +135,7 @@ function CORRIGIR_POUPANCA(data_inicial, data_final, valor, regra_nova = true) {
  */
 function CORRIGIR_INDICE_DE_PRECO(mes_inicial, mes_final, valor, indice_de_preco) {
   const codigosIndices = {
-    'IGP-M': '00189IGP-M',
+    'IGP-M': '28655IGP-M',
     'IGP-DI': '00190IGP-DI',
     'INPC': '00188INPC',
     'IPCA': '00433IPCA',
