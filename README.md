@@ -11,6 +11,12 @@ Script para usar a [Calculadora do Cidadão do Banco Central](https://www3.bcb.g
 
 ## Comandos
 
+- [**CORRIGIR_SELIC**](#CORRIGIR_SELIC): Obtém valor corrigido pela SELIC.
+- [**CORRIGIR_CDI**](#CORRIGIR_CDI): Obtém valor corrigido pelo CDI.
+- [**CORRIGIR_TR**](#CORRIGIR_TR): Obtém valor corrigido pela TR.
+- [**CORRIGIR_POUPANCA**](#CORRIGIR_POUPANCA): Obtém valor corrigido pela remuneração da poupança.
+- [**CORRIGIR_INDICE_DE_PRECO**](#CORRIGIR_INDICE_DE_PRECO): Obtém valor corrigido por um índice de preço (IGP-DI, INPC, IPCA, IPC-E, IPC-BRASIL e IPC-SP).
+
 ### CORRIGIR_SELIC
 
 Obtém valor corrigido pela SELIC.
@@ -19,8 +25,8 @@ Obtém valor corrigido pela SELIC.
 
 `CORRIGIR_SELIC(data_inicial; data_final; valor)`
 
- * data_inicial - Data inicial.
- * data_final - Data final.
+ * data_inicial - Data inicial. Referenciar célula formatada como data ou usar [`DATE`](https://support.google.com/docs/answer/3092969?hl=en&ref_topic=3105385) para inserir valor diretamente.
+ * data_final - Data final. Referenciar célula formatada como data ou usar [`DATE`](https://support.google.com/docs/answer/3092969?hl=en&ref_topic=3105385) para inserir valor diretamente.
  * valor - Valor a ser corrigido pela SELIC.
 
 ### CORRIGIR_CDI
@@ -32,8 +38,8 @@ Obtém valor corrigido pelo CDI.
 
 `CORRIGIR_CDI(data_inicial; data_final; valor; cdi)`
 
- * data_inicial - Data inicial.
- * data_final - Data final.
+ * data_inicial - Data inicial. Referenciar célula formatada como data ou usar [`DATE`](https://support.google.com/docs/answer/3092969?hl=en&ref_topic=3105385) para inserir valor diretamente.
+ * data_final - Data final. Referenciar célula formatada como data ou usar [`DATE`](https://support.google.com/docs/answer/3092969?hl=en&ref_topic=3105385) para inserir valor diretamente.
  * valor - Valor a ser corrigido pelo CDI.
  * cdi - Percentual do CDI (de 0 a 100).
 
@@ -45,10 +51,10 @@ Obtém valor corrigido pela TR.
 
 `CORRIGIR_TR(data_inicio_serie; data_vencimento_serie; valor; data_efetivo_pagamento)`
 
- * `data_inicio_serie` - Data do início da série (inclui a taxa do mês inicial).
- * `data_vencimento_serie` - Data do vencimento da série.
+ * `data_inicio_serie` - Data do início da série (inclui a taxa do mês inicial). Referenciar célula formatada como data ou usar [`DATE`](https://support.google.com/docs/answer/3092969?hl=en&ref_topic=3105385) para inserir valor diretamente.
+ * `data_vencimento_serie` - Data do vencimento da série. Referenciar célula formatada como data ou usar [`DATE`](https://support.google.com/docs/answer/3092969?hl=en&ref_topic=3105385) para inserir valor diretamente.
  * `valor` - Valor a ser corrigido pela TR.
- * `data_efetivo_pagamento` - Data do efetivo pagamento (atraso).
+ * `data_efetivo_pagamento` - Data do efetivo pagamento (atraso). Referenciar célula formatada como data ou usar [`DATE`](https://support.google.com/docs/answer/3092969?hl=en&ref_topic=3105385) para inserir valor diretamente.
 
 ### CORRIGIR_POUPANCA
 
@@ -58,8 +64,8 @@ Obtém valor corrigido pela remuneração da poupança.
 
 `CORRIGIR_POUPANCA(data_inicial; data_final; valor; [regra_nova])`
 
- * `data_inicial` - Data inicial.
- * `data_final` - Data final.
+ * `data_inicial` - Data inicial. Referenciar célula formatada como data ou usar [`DATE`](https://support.google.com/docs/answer/3092969?hl=en&ref_topic=3105385) para inserir valor diretamente.
+ * `data_final` - Data final. Referenciar célula formatada como data ou usar [`DATE`](https://support.google.com/docs/answer/3092969?hl=en&ref_topic=3105385) para inserir valor diretamente.
  * `valor` - Valor a ser corrigido pela remuneração da poupança.
  * `regra_nova` - [`TRUE` por padrão] - `TRUE`: depósitos a partir de 4/5/2012; `FALSE`: depósitos até 3/5/2012.
 
@@ -71,7 +77,7 @@ Obtém valor corrigido por um índice de preço (IGP-DI, INPC, IPCA, IPC-E, IPC-
 
 `CORRIGIR_INDICE_DE_PRECO(mes_inicial; mes_final; valor; indice_de_preco)`
 
- * `mes_inicial` - Mês inicial.
- * `mes_final` - Mês final.
+ * `mes_inicial` - Mês inicial. Referenciar célula formatada como data ou usar [`DATE`](https://support.google.com/docs/answer/3092969?hl=en&ref_topic=3105385) para inserir valor diretamente.
+ * `mes_final` - Mês final. Referenciar célula formatada como data ou usar [`DATE`](https://support.google.com/docs/answer/3092969?hl=en&ref_topic=3105385) para inserir valor diretamente.
  * `valor` - Valor a ser corrigido pelo índice de preço.
  * `indice_de_preco` - Índice de preço (texto): IGP-DI, INPC, IPCA, IPC-E, IPC-BRASIL ou IPC-SP.
