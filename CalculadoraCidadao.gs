@@ -14,7 +14,7 @@
  */
 function parseResponse(html) {
   const regex = /Valor\s*corrigido\s*na\s*data\s*final.*\>R\$\D*(\d*\.?\d*\,?\d*)/gsm;
-  const match = regex.exec(html);
+  const match = regex.exec(html.replaceAll('.', ''));
   const stringValorPtBr = match[1];
   const partesInteiraEFracionaria = stringValorPtBr.replace('.', '').split(',');
   const valor = parseInt(partesInteiraEFracionaria[0]) + (parseInt(partesInteiraEFracionaria[1])/100.0);
