@@ -1,7 +1,7 @@
 /*====================================================================================================================================*
   CalculadoraCidadao.gs
   ====================================================================================================================================
-  Version:      0.2.0
+  Version:      0.2.1
   Project Page: https://github.com/htadashi/CalculadoraCidadao.gs
   Copyright:    (c) 2020 by Hugo Tadashi
                 (c) 2020 by André Pereira Henriques
@@ -13,10 +13,10 @@
  * @OnlyCurrentDoc
  */
 function parseResponse(html) {
-  const regex = /Valor\s*corrigido\s*na\s*data\s*final.*\>R\$\D*(\d*\.?\d*\,?\d*)/gsm;
+  const regex = /Valor\s*corrigido\s*na\s*data\s*final.*\>R\$\D*(\d*\,?\d*)/gsm;
   const match = regex.exec(html.replaceAll('.', ''));
   const stringValorPtBr = match[1];
-  const partesInteiraEFracionaria = stringValorPtBr.replace('.', '').split(',');
+  const partesInteiraEFracionaria = stringValorPtBr.split(',');
   const valor = parseInt(partesInteiraEFracionaria[0]) + (parseInt(partesInteiraEFracionaria[1])/100.0);
   return valor;
 }
@@ -123,12 +123,12 @@ function CORRIGIR_POUPANCA(data_inicial, data_final, valor, regra_nova = true) {
 }
 
 /**
- * Obtém valor corrigido por um índice de preço (IGP-DI, INPC, IPCA, IPC-E, IPC-BRASIL e IPC-SP) a partir da calculadora do cidadão do BCB
+ * Obtém valor corrigido por um índice de preço (IGP-M, IGP-DI, INPC, IPCA, IPC-E, IPC-BRASIL e IPC-SP) a partir da calculadora do cidadão do BCB
  *
  * @param {Date} mes_inicial       - Mês inicial
  * @param {Date} mes_final         - Mês final
  * @param {number} valor           - Valor a ser corrigido pelo índice de preço
- * @param {string} indice_de_preco - Índice de preço (IGP-DI, INPC, IPCA, IPC-E, IPC-BRASIL e IPC-SP)
+ * @param {string} indice_de_preco - Índice de preço (IGP-M, IGP-DI, INPC, IPCA, IPC-E, IPC-BRASIL e IPC-SP)
  * @customFunction
  *
  * @returns {number} Valor corrigido
