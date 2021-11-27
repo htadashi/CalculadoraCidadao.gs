@@ -15,7 +15,7 @@ Script para usar a [Calculadora do Cidadão do Banco Central](https://www3.bcb.g
 - [**CORRIGIR_CDI**](#CORRIGIR_CDI): Obtém valor corrigido pelo CDI.
 - [**CORRIGIR_TR**](#CORRIGIR_TR): Obtém valor corrigido pela TR.
 - [**CORRIGIR_POUPANCA**](#CORRIGIR_POUPANCA): Obtém valor corrigido pela remuneração da poupança.
-- [**CORRIGIR_INDICE_DE_PRECO**](#CORRIGIR_INDICE_DE_PRECO): Obtém valor corrigido por um índice de preço (IGP-DI, INPC, IPCA, IPC-E, IPC-BRASIL e IPC-SP).
+- [**CORRIGIR_INDICE_DE_PRECO**](#CORRIGIR_INDICE_DE_PRECO): Obtém valor corrigido por um índice de preço (IGP-M, IGP-DI, INPC, IPCA, IPC-E, IPC-BRASIL e IPC-SP).
 
 ### CORRIGIR_SELIC
 
@@ -71,7 +71,7 @@ Obtém valor corrigido pela remuneração da poupança.
 
 ### CORRIGIR_INDICE_DE_PRECO
 
-Obtém valor corrigido por um índice de preço (IGP-DI, INPC, IPCA, IPC-E, IPC-BRASIL e IPC-SP).
+Obtém valor corrigido por um índice de preço (IGP-M, IGP-DI, INPC, IPCA, IPC-E, IPC-BRASIL e IPC-SP).
 
 #### Sintaxe
 
@@ -80,4 +80,4 @@ Obtém valor corrigido por um índice de preço (IGP-DI, INPC, IPCA, IPC-E, IPC-
  * `mes_inicial` - Mês inicial. Referenciar célula formatada como data ou usar [`DATE`](https://support.google.com/docs/answer/3092969?hl=en&ref_topic=3105385) para inserir valor diretamente.
  * `mes_final` - Mês final. Referenciar célula formatada como data ou usar [`DATE`](https://support.google.com/docs/answer/3092969?hl=en&ref_topic=3105385) para inserir valor diretamente.
  * `valor` - Valor a ser corrigido pelo índice de preço.
- * `indice_de_preco` - Índice de preço (texto): IGP-DI, INPC, IPCA, IPC-E, IPC-BRASIL ou IPC-SP.
+ * `indice_de_preco` - Índice de preço (texto): IGP-M, IGP-DI, INPC, IPCA, IPC-E, IPC-BRASIL ou IPC-SP.
