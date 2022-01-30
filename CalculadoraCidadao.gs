@@ -1,7 +1,7 @@
 /*====================================================================================================================================*
   CalculadoraCidadao.gs
   ====================================================================================================================================
-  Version:      0.2.1
+  Version:      0.2.2
   Project Page: https://github.com/htadashi/CalculadoraCidadao.gs
   Copyright:    (c) 2020 by Hugo Tadashi
                 (c) 2020 by André Pereira Henriques
@@ -42,10 +42,14 @@ function obterValor(method, formData) {
     'method': 'post',
     'payload': formData
   };
-  const response = UrlFetchApp.fetch(`https://www3.bcb.gov.br/CALCIDADAO/publico/${method}.do?method=${method}`, options);
-  const html = response.getContentText();
-  const valorCorrigido = parseResponse(html);
-  return valorCorrigido;
+  try{
+    const response = UrlFetchApp.fetch(`https://www3.bcb.gov.br/CALCIDADAO/publico/${method}.do?method=${method}`, options);
+    const html = response.getContentText();
+    const valorCorrigido = parseResponse(html);
+    return valorCorrigido;
+  }catch{
+      throw new Error('conexão com site do BCB com problemas');
+  }
 }
 
 /**
