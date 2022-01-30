@@ -2,6 +2,11 @@
 
 Script para usar a [Calculadora do Cidadão do Banco Central](https://www3.bcb.gov.br/CALCIDADAO/publico/exibirFormCorrecaoValores.do?method=exibirFormCorrecaoValores) em planilhas do Google Sheets.
 
+[Exemplo de planilha](https://docs.google.com/spreadsheets/d/1c0Ay3IA9z5t0rmqoviEB74bHosCZsTYC6rE9m796lU4/edit#gid=0): 
+
+![image](https://user-images.githubusercontent.com/2355491/151703269-33f42c2c-db1c-4a47-a794-5d1c664b2d64.png)
+
+
 ## Instalação
 
 1. Abra uma planilha no Google sheets 
