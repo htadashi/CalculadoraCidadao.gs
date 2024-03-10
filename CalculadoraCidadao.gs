@@ -15,13 +15,15 @@
 function parseResponse(html) {
   const regex_valor = /Valor\s*corrigido\s*na\s*data\s*final.*\>R\$\D*(\d*\,?\d*)/sm;
   const match_valor = regex_valor.exec(html.replaceAll('.', ''));
-  if(match_valor === null){
+  if (match_valor === null) {
     const regex_error = /<div class=msgErro .*?">(.*?)<\/div>/sm;
     const match_error = regex_error.exec(html);
-    if(match_error === null) throw new Error("Erro no processamento do HTML.");
-    error_msg = match_error[1].replace(/(&bull;|&nbsp;|<br>)/g, '');
-    return error_msg;
-  }else{
+    if (match_error === null) { 
+      throw new Error("Erro no processamento do HTML.");
+    }
+    const error_msg = match_error[1].replace(/(&bull;|&nbsp;|<br>)/g, '');
+    throw new Error(error_msg);
+  } else {
     const stringValorPtBr = match_valor[1];
     const partesInteiraEFracionaria = stringValorPtBr.split(',');
     const valor = parseInt(partesInteiraEFracionaria[0]) + (parseInt(partesInteiraEFracionaria[1])/100.0);
@@ -50,13 +52,13 @@ function obterValor(method, formData) {
     'method': 'post',
     'payload': formData,
   };
-  try{
+  try {
     const response = UrlFetchApp.fetch(`https://www3.bcb.gov.br/CALCIDADAO/publico/${method}.do?method=${method}`, options);
     const html = response.getContentText('ISO-8859-1');
     const valorCorrigido = parseResponse(html);
     return valorCorrigido;
-  }catch{
-    throw new Error('conexão com site do BCB com problemas');
+  } catch (excecao) {
+    throw new Error(`falha na extração de dados da página no BCB: ${excecao.message}`);
   }
 }
 
