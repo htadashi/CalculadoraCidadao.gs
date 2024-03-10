@@ -1,7 +1,7 @@
 /*====================================================================================================================================*
   CalculadoraCidadao.gs
   ====================================================================================================================================
-  Version:      0.2.2
+  Version:      0.2.3
   Project Page: https://github.com/htadashi/CalculadoraCidadao.gs
   Copyright:    (c) 2020 by Hugo Tadashi
                 (c) 2020 by André Pereira Henriques
@@ -13,12 +13,22 @@
  * @OnlyCurrentDoc
  */
 function parseResponse(html) {
-  const regex = /Valor\s*corrigido\s*na\s*data\s*final.*\>R\$\D*(\d*\,?\d*)/gsm;
-  const match = regex.exec(html.replaceAll('.', ''));
-  const stringValorPtBr = match[1];
-  const partesInteiraEFracionaria = stringValorPtBr.split(',');
-  const valor = parseInt(partesInteiraEFracionaria[0]) + (parseInt(partesInteiraEFracionaria[1])/100.0);
-  return valor;
+  const regex_valor = /Valor\s*corrigido\s*na\s*data\s*final.*\>R\$\D*(\d*\,?\d*)/sm;
+  const match_valor = regex_valor.exec(html.replaceAll('.', ''));
+  if (match_valor === null) {
+    const regex_error = /<div class=msgErro .*?">(.*?)<\/div>/sm;
+    const match_error = regex_error.exec(html);
+    if (match_error === null) { 
+      throw new Error("Erro no processamento do HTML.");
+    }
+    const error_msg = match_error[1].replace(/(&bull;|&nbsp;|<br>)/g, '');
+    throw new Error(error_msg);
+  } else {
+    const stringValorPtBr = match_valor[1];
+    const partesInteiraEFracionaria = stringValorPtBr.split(',');
+    const valor = parseInt(partesInteiraEFracionaria[0]) + (parseInt(partesInteiraEFracionaria[1])/100.0);
+    return valor;
+  }
 }
 
 /**
@@ -40,15 +50,15 @@ function obterFormDataPorData(dataInicial, dataFinal, valor, formDataExtra = {})
 function obterValor(method, formData) {
   const options = {
     'method': 'post',
-    'payload': formData
+    'payload': formData,
   };
-  try{
+  try {
     const response = UrlFetchApp.fetch(`https://www3.bcb.gov.br/CALCIDADAO/publico/${method}.do?method=${method}`, options);
-    const html = response.getContentText();
+    const html = response.getContentText('ISO-8859-1');
     const valorCorrigido = parseResponse(html);
     return valorCorrigido;
-  }catch{
-      throw new Error('conexão com site do BCB com problemas');
+  } catch (excecao) {
+    throw new Error(`falha na extração de dados da página no BCB: ${excecao.message}`);
   }
 }
 
@@ -178,4 +188,10 @@ function teste() {
   const ipcae = CORRIGIR_INDICE_DE_PRECO(new Date(2019, 11), new Date(2020, 0), 100, 'IPCA-E'); // 101.77
   const ipcbrasil = CORRIGIR_INDICE_DE_PRECO(new Date(2019, 11), new Date(2020, 0), 100, 'IPC-BRASIL'); // 101.36
   const ipcsp = CORRIGIR_INDICE_DE_PRECO(new Date(2019, 11), new Date(2020, 0), 100, 'IPC-SP'); // 101.23
+
+  // Casos de falha:
+  // Data final deve ser maior ou igual à data Inicial
+  const erro1 = CORRIGIR_SELIC(new Date(2024, 0, 2), new Date(2020, 03, 09), 100); 
+  // Valor do índice não disponível para o período solicitado
+  const erro2 = CORRIGIR_SELIC(new Date(2020, 0, 2), new Date(2024, 03, 09), 100); 
 }
