@@ -1,7 +1,7 @@
 /*====================================================================================================================================*
   CalculadoraCidadao.gs
   ====================================================================================================================================
-  Version:      0.2.3
+  Version:      0.2.4
   Project Page: https://github.com/htadashi/CalculadoraCidadao.gs
   Copyright:    (c) 2020 by Hugo Tadashi
                 (c) 2020 by André Pereira Henriques
@@ -47,7 +47,17 @@ function obterFormDataPorData(dataInicial, dataFinal, valor, formDataExtra = {})
 /**
  * @OnlyCurrentDoc
  */
-function obterValor(method, formData) {
+function funcSleep (sec)
+{
+  SpreadsheetApp.flush();
+  Utilities.sleep(sec*1000);
+  SpreadsheetApp.flush();
+}
+
+/**
+ * @OnlyCurrentDoc
+ */
+function obterValor(method, formData, retry) {
   const options = {
     'method': 'post',
     'payload': formData,
@@ -58,7 +68,12 @@ function obterValor(method, formData) {
     const valorCorrigido = parseResponse(html);
     return valorCorrigido;
   } catch (excecao) {
-    throw new Error(`falha na extração de dados da página no BCB: ${excecao.message}`);
+    if (retry >= 10) {
+      throw new Error(`falha na extração de dados da página no BCB: ${excecao.message}`);
+    } else {
+      funcSleep(2);
+      return obterValor(method, formData, retry++);
+    }
   }
 }
 
@@ -74,7 +89,7 @@ function obterValor(method, formData) {
  */
 function CORRIGIR_SELIC(data_inicial, data_final, valor) {
   const formData = obterFormDataPorData(data_inicial, data_final, valor);
-  const valorCorrigido = obterValor('corrigirPelaSelic', formData);
+  const valorCorrigido = obterValor('corrigirPelaSelic', formData, 0);
   return valorCorrigido;
 }
 
@@ -92,7 +107,7 @@ function CORRIGIR_SELIC(data_inicial, data_final, valor) {
 function CORRIGIR_CDI(data_inicial, data_final, valor, cdi) {
   const formDataExtra = {'percentualCorrecao': cdi.toLocaleString('pt-BR')};
   const formData = obterFormDataPorData(data_inicial, data_final, valor, formDataExtra);
-  const valorCorrigido = obterValor('corrigirPeloCDI', formData);
+  const valorCorrigido = obterValor('corrigirPeloCDI', formData, 0);
   return valorCorrigido;
 }
 
@@ -114,7 +129,7 @@ function CORRIGIR_TR(data_inicio_serie, data_vencimento_serie, valor, data_efeti
     'valorCorrecao': valor.toLocaleString('pt-BR'),
     'dataEfetivoPagamento': Utilities.formatDate(data_efetivo_pagamento, 'GMT', 'dd/MM/yyyy')
   };
-  const valorCorrigido = obterValor('corrigirPelaTR', formData);
+  const valorCorrigido = obterValor('corrigirPelaTR', formData, 0);
   return valorCorrigido;
 }
 
@@ -132,7 +147,7 @@ function CORRIGIR_TR(data_inicio_serie, data_vencimento_serie, valor, data_efeti
 function CORRIGIR_POUPANCA(data_inicial, data_final, valor, regra_nova = true) {
   const formDataExtra = {'regraNova': regra_nova.toString()};
   const formData = obterFormDataPorData(data_inicial, data_final, valor, formDataExtra);
-  const valorCorrigido = obterValor('corrigirPelaPoupanca', formData);
+  const valorCorrigido = obterValor('corrigirPelaPoupanca', formData, 0);
   return valorCorrigido;
 }
 
@@ -165,7 +180,7 @@ function CORRIGIR_INDICE_DE_PRECO(mes_inicial, mes_final, valor, indice_de_preco
       'valorCorrecao': valor.toLocaleString('pt-BR'),
       'selIndice': codigo
     };
-    const valorCorrigido = obterValor('corrigirPorIndice', formData);
+    const valorCorrigido = obterValor('corrigirPorIndice', formData, 0);
     return valorCorrigido;
   } else {
     throw new Error('indice_de_preco inválido');
